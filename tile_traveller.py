@@ -4,12 +4,12 @@
 #  This should be able to be accomplished with ifelse loops inside a function and a while loop running in the main program.
 
 def validDirection(position, direction):
-    notValidMsg = "Not a valid direction!"
     if position == "1,1":
         if direction == "n":
             return "1,2"
         else:
             return False
+
     elif position == "1,2":
         if direction == "n":
             return "1,3"
@@ -18,7 +18,53 @@ def validDirection(position, direction):
         elif direction == "e":
             return "2,2"
         else:
-            return notValidMsg
+            return False
+
+    elif position == "1,3":
+        if direction == "e":
+            return "2,3"
+        elif direction == "s":
+            return "1,2"
+        else:
+            return False
+    
+    elif position == "2,1":
+        if direction == "n":
+            return "2,2"
+        else:
+            return False
+
+    elif position == "2,2":
+        if direction == "w":
+            return "1,2"
+        elif direction == "s":
+            return "2,1"
+        else:
+            return False
+    
+    elif position == "2,3":
+        if direction == "e":
+            return "3,3"
+        elif direction == "w":
+            return "1,3"
+        else:
+            return False
+    
+    elif position == "3,2":
+        if direction == "n":
+            return "3,3"
+        elif direction == "s":
+            return "3,1"
+        else:
+            return False
+
+    elif position == "3,3":
+        if direction == "w":
+            return "2,3"
+        elif direction == "s":
+            return "3,2"
+        else:
+            return False
 
 def validDirections(position):
     if position == "1,1":
@@ -30,15 +76,20 @@ def validDirections(position):
 currentTile = "1,1"
 victoryTile = "3,1"
 nextTile = ""
+notValidMsg = False
 
 # senda direction alltaf med .lower()
 while currentTile != victoryTile:
-    print("You can travel:", validDirections(currentTile) + ".")
-
+    print("You can travel:", str(validDirections(currentTile))+".")
+    
     nextTile = input("Direction: ")
 
-    validDirection(currentTile, nextTile)
-    currentTile == nextTile
+    if validDirection(currentTile, nextTile):
+        currentTile = validDirection(currentTile, nextTile)
+        print(currentTile)
+        print(notValidMsg)
+    else:
+        print("Not a valid direction!")
 
     
 
