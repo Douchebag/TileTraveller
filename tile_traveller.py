@@ -3,3 +3,19 @@
 #  The user starts on a tile [1, 1] and the victory tile is [3, 1]. 
 #  This should be able to be accomplished with ifelse loops inside a function and a while loop running in the main program.
 
+def validDirection():
+    pass
+
+#Variables
+currentTile = "1,1"
+victoryTile = "3,1"
+
+
+while currentTile != victoryTile:
+    pass
+
+    
+
+
+else:
+    print("Victory!")
