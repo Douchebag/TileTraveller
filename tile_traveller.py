@@ -3,16 +3,42 @@
 #  The user starts on a tile [1, 1] and the victory tile is [3, 1]. 
 #  This should be able to be accomplished with ifelse loops inside a function and a while loop running in the main program.
 
-def validDirection():
-    pass
+def validDirection(position, direction):
+    notValidMsg = "Not a valid direction!"
+    if position == "1,1":
+        if direction == "n":
+            return "1,2"
+        else:
+            return False
+    elif position == "1,2":
+        if direction == "n":
+            return "1,3"
+        elif direction == "s":
+            return "1,1"
+        elif direction == "e":
+            return "2,2"
+        else:
+            return notValidMsg
+
+def validDirections(position):
+    if position == "1,1":
+        return "(N)orth"
+    elif position == "1,2":
+        return "(N)orth or (E)ast or (S)outh"
 
 #Variables
 currentTile = "1,1"
 victoryTile = "3,1"
+nextTile = ""
 
-
+# senda direction alltaf med .lower()
 while currentTile != victoryTile:
-    pass
+    print("You can travel:", validDirections(currentTile) + ".")
+
+    nextTile = input("Direction: ")
+
+    validDirection(currentTile, nextTile)
+    currentTile == nextTile
 
     
 
