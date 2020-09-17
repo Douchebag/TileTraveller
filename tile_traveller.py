@@ -3,6 +3,8 @@
 #  The user starts on a tile [1, 1] and the victory tile is [3, 1]. 
 #  This should be able to be accomplished with ifelse loops inside a function and a while loop running in the main program.
 
+# https://github.com/Douchebag/TileTraveller
+
 def validDirection(position, direction):
     if position == "1,1":
         if direction == "n":
@@ -71,6 +73,19 @@ def validDirections(position):
         return "(N)orth"
     elif position == "1,2":
         return "(N)orth or (E)ast or (S)outh"
+    elif position == "1,3":
+        return "(E)ast or (S)outh"
+    elif position == "2,1":
+        return "(N)orth"
+    elif position == "2,2":
+        return "(S)outh or (W)est"
+    elif position == "2,3":
+        return "(E)ast or (W)est"
+    elif position == "3,2":
+        return "(N)orth or (S)outh"
+    elif position == "3,3":
+        return "(S)outh or (W)est"
+    
 
 #Variables
 currentTile = "1,1"
@@ -78,21 +93,15 @@ victoryTile = "3,1"
 nextTile = ""
 notValidMsg = False
 
-# senda direction alltaf med .lower()
 while currentTile != victoryTile:
     print("You can travel:", str(validDirections(currentTile))+".")
     
-    nextTile = input("Direction: ")
+    nextTile = input("Direction: ").lower()
 
     if validDirection(currentTile, nextTile):
         currentTile = validDirection(currentTile, nextTile)
-        print(currentTile)
-        print(notValidMsg)
     else:
         print("Not a valid direction!")
-
-    
-
 
 else:
     print("Victory!")
