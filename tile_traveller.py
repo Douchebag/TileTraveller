@@ -86,7 +86,7 @@ def validDirections(position):
     elif position == "3,3":
         return "(S)outh or (W)est"
     
-def leverTiles(currentPos, leverTileList):
+def leverTiles(currentPos, leverTileList, coins):
     if currentPos in leverTileList:
         leverInput = input("Pull a lever (y/n): ").lower()
         if leverInput == "y":
@@ -103,28 +103,40 @@ def coinReceived(coins):
     coins += 1
     return coins
 
+def keepPlaying(currentTile,victoryTile,nextTile,levelTileList):
+    coins = 0
+    while currentTile != victoryTile:
+        if leverTiles(currentTile, leverTileList, coins):
+            coins = coinReceived(coins)
+
+        print("You can travel:", str(validDirections(currentTile))+".")
+
+        nextTile = input("Direction: ").lower()
+
+        levelTileList = modifyLeverTiles(currentTile,nextTile,leverTileList)
+
+        if validDirection(currentTile, nextTile):
+            currentTile = validDirection(currentTile, nextTile)
+        else:
+            print("Not a valid direction!")
+
+    else:
+        print("Victory! Total coins", str(coins) + ".")
+        answer = input("Play again (y/n): ").lower()
+        if answer == "y":
+            currentTile = "1,1"
+            coins = 0
+        return answer
+
 # Variables
+answer = ""
 currentTile = "1,1"
 victoryTile = "3,1"
 nextTile = ""
 notValidMsg = False
-coins = 0
+#coins = 0
 leverTileList = ["1,2", "2,2", "2,3", "3,2"]
 
-while currentTile != victoryTile:
-    if leverTiles(currentTile, leverTileList):
-        coins = coinReceived(coins)
 
-    print("You can travel:", str(validDirections(currentTile))+".")
-
-    nextTile = input("Direction: ").lower()
-
-    levelTileList = modifyLeverTiles(currentTile,nextTile,leverTileList)
-
-    if validDirection(currentTile, nextTile):
-        currentTile = validDirection(currentTile, nextTile)
-    else:
-        print("Not a valid direction!")
-
-else:
-    print("Victory! Total coins", str(coins) + ".")
+while answer != "n":
+    answer = keepPlaying(currentTile,victoryTile,nextTile,leverTileList)
