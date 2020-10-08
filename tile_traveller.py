@@ -1,7 +1,7 @@
-#  The program allows the user to input one of four directions, the user then travels to that direction
-#  depending on wether the direction is valid. Once the user has reached the end tile a message is displayed.
-#  The user starts on a tile [1, 1] and the victory tile is [3, 1]. 
-#  This should be able to be accomplished with ifelse loops inside a function and a while loop running in the main program.
+# The program allows the user to input one of four directions, the user then travels to that direction
+# depending on wether the direction is valid. Once the user has reached the end tile a message is displayed.
+# The user starts on a tile [1, 1] and the victory tile is [3, 1]. 
+# This should be able to be accomplished with ifelse loops inside a function and a while loop running in the main program.
 
 # https://github.com/Douchebag/TileTraveller
 
@@ -86,16 +86,35 @@ def validDirections(position):
     elif position == "3,3":
         return "(S)outh or (W)est"
     
+def leverTiles(currentPos, leverTileList, nextTile):
+    if currentPos in leverTileList:
+        if not validDirection(currentPos, nextTile):
+            leverTileList.remove(currentPos)
+        else:
+            leverInput = input("Pull a lever (y/n): ").lower()
+            if leverInput == "y":
+                print("You received 1 coin, your total is now", str(coins + 1) + ".")
+                return True
+
+
+def coinReceived(coins):
+    coins += 1
+    return coins
 
 #Variables
 currentTile = "1,1"
 victoryTile = "3,1"
 nextTile = ""
 notValidMsg = False
+coins = 0
+leverTileList = ["1,2", "2,2", "2,3", "3,2"]
 
 while currentTile != victoryTile:
+    if leverTiles(currentTile, leverTileList, nextTile):
+        coins = coinReceived(coins)
+
     print("You can travel:", str(validDirections(currentTile))+".")
-    
+
     nextTile = input("Direction: ").lower()
 
     if validDirection(currentTile, nextTile):
@@ -104,4 +123,4 @@ while currentTile != victoryTile:
         print("Not a valid direction!")
 
 else:
-    print("Victory!")
+    print("Victory! Total coins", str(coins) + ".")
