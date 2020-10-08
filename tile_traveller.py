@@ -5,6 +5,8 @@
 
 # https://github.com/Douchebag/TileTraveller
 
+from random import choice, seed
+
 def validDirection(position, direction):
     if position == "1,1":
         if direction == "n":
@@ -88,7 +90,8 @@ def validDirections(position):
     
 def leverTiles(currentPos, leverTileList, coins):
     if currentPos in leverTileList:
-        leverInput = input("Pull a lever (y/n): ").lower()
+        #leverInput = input("Pull a lever (y/n): ").lower()
+        leverInput = choice(["y","n"])
         if leverInput == "y":
             print("You received 1 coin, your total is now", str(coins + 1) + ".")
             return True
@@ -105,13 +108,22 @@ def coinReceived(coins):
 
 def keepPlaying(currentTile,victoryTile,nextTile,levelTileList):
     coins = 0
+    moves = 0
+    seed_input = int(input("Input seed: "))
+    seed(seed_input)
     while currentTile != victoryTile:
+
+        
+    
+
         if leverTiles(currentTile, leverTileList, coins):
             coins = coinReceived(coins)
 
         print("You can travel:", str(validDirections(currentTile))+".")
 
-        nextTile = input("Direction: ").lower()
+        #nextTile = input("Direction: ").lower()
+        nextTile  = (choice(["n","e","s","w"]))
+        moves += 1
 
         levelTileList = modifyLeverTiles(currentTile,nextTile,leverTileList)
 
@@ -121,11 +133,12 @@ def keepPlaying(currentTile,victoryTile,nextTile,levelTileList):
             print("Not a valid direction!")
 
     else:
-        print("Victory! Total coins", str(coins) + ".")
+        print("Victory! Total coins", str(coins) + ".","Moves "+str(moves)+".")
         answer = input("Play again (y/n): ").lower()
         if answer == "y":
             currentTile = "1,1"
             coins = 0
+            moves = 0
         return answer
 
 # Variables
@@ -137,6 +150,6 @@ notValidMsg = False
 #coins = 0
 leverTileList = ["1,2", "2,2", "2,3", "3,2"]
 
-
 while answer != "n":
+    
     answer = keepPlaying(currentTile,victoryTile,nextTile,leverTileList)
