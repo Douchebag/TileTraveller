@@ -86,15 +86,17 @@ def validDirections(position):
     elif position == "3,3":
         return "(S)outh or (W)est"
     
-def leverTiles(currentPos, leverTileList, nextTile):
+def leverTiles(currentPos, leverTileList):
     if currentPos in leverTileList:
-        if not validDirection(currentPos, nextTile):
-            leverTileList.remove(currentPos)
-        else:
-            leverInput = input("Pull a lever (y/n): ").lower()
-            if leverInput == "y":
-                print("You received 1 coin, your total is now", str(coins + 1) + ".")
-                return True
+        leverInput = input("Pull a lever (y/n): ").lower()
+        if leverInput == "y":
+            print("You received 1 coin, your total is now", str(coins + 1) + ".")
+            return True
+
+def modifyLeverTiles(currentTile,nextTile,leverTileList):
+    if not validDirection(currentTile,nextTile) and (currentTile in leverTileList) :
+        leverTileList.remove(currentTile)
+        return leverTileList
 
 
 def coinReceived(coins):
@@ -110,12 +112,14 @@ coins = 0
 leverTileList = ["1,2", "2,2", "2,3", "3,2"]
 
 while currentTile != victoryTile:
-    if leverTiles(currentTile, leverTileList, nextTile):
+    if leverTiles(currentTile, leverTileList):
         coins = coinReceived(coins)
 
     print("You can travel:", str(validDirections(currentTile))+".")
 
     nextTile = input("Direction: ").lower()
+
+    levelTileList = modifyLeverTiles(currentTile,nextTile,leverTileList)
 
     if validDirection(currentTile, nextTile):
         currentTile = validDirection(currentTile, nextTile)
