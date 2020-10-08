@@ -103,7 +103,7 @@ def coinReceived(coins):
     coins += 1
     return coins
 
-#Variables
+# Variables
 currentTile = "1,1"
 victoryTile = "3,1"
 nextTile = ""
